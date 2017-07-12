@@ -1,0 +1,37 @@
+<html>
+<head>
+<body>
+<canvas id="c" width="900" height="900"></canvas>
+<script type="text/javascript">
+
+
+
+var canvas = document.getElementById("c");
+var ctx = canvas.getContext("2d");
+
+var image = new Image();
+
+
+
+
+$.ajax({
+	type: "GET",
+	url:"http://localhost:5984/bluebird/1499676501",
+    processData: false
+ })
+ .done(function(result) 
+ {
+	myObj = result;
+	if (myObj["image"])
+	{
+	   image.src=myObj["image"];
+	
+	}
+ });
+
+image.onload = function() {
+    ctx.drawImage(image, 0, 0);
+};
+</body>
+</head>
+</html>
