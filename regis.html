@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Registration Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://use.fontawesome.com/af44e04888.js"></script>
+  <style>
+.modal .modal-body {
+
+width:100%
+overflow-y: auto;
+overflow-x: auto;
+
+} </style>
+</head>
+<body>
+
+<div class="jumbotron text-center" style="background-color: #5cb85c">
+  <h1>UnoChains</h1>
+  <p>Accurate Identity Through Blockchain Technology</p> 
+</div>
+  
+<div class="container">
+    <center>
+    <form>
+	 
+    <div class="form-group">
+    
+	<div class="col-xs-4">
+	<input class="form-control" id="UserName" type="text" placeholder="Enter User Name">  <br>
+    <button type="button" class="btn btn-success btn-social btn-gmail  form-control" onclick="signIn();">
+     <i class="fa fa-google" aria-hidden="true"></i> Verify Gmail</button>
+
+	 <br>
+	 <br>
+	 <button type="button" class="btn btn-success form-control"  onclick="verifyPhone();">
+    <i class="fa fa-phone" aria-hidden="true"></i> Verify Mobile Number</button>
+	<br>
+	<br>
+	<button type="button" class="btn btn-success  form-control"  id="facecapture" onclick="onStartCam();">
+    <i class="fa fa-camera" aria-hidden="true"></i> Face Capture</button>
+	<br>
+	<br>
+	<button type="button" class="btn btn-success  form-control"  id="save" onclick="saveUpdate();">
+	<i class="fa fa-floppy-o"></i> Save/Update</button>
+	 </div> 
+	 <div class="col-xs-4">
+    <br>
+    <div id="gmail_correct" style="display:none">    
+	<i class="fa fa-check fa-5x"  aria-hidden="true"></i></div>
+	<div id="gmail_fail" style="display:none">    
+	<i class="fa fa-times  fa-5x"  aria-hidden="true"></i></div>
+	<br>
+	<div id="phone_correct" style="display:none">    
+	<i class="fa fa-check fa-5x"  aria-hidden="true"></i></div>
+	<div id="phone_fail" style="display:none">    
+	<i class="fa fa-times  fa-5x"  aria-hidden="true"></i></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	
+    </div> 
+	 
+	 
+	 
+	 <div>
+	<br>
+	<br>
+	<br>
+	
+	<br>
+	<br>
+	<br>
+	
+	<div class="modal"  id="phonemodal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg "  role="document">
+    <div class="modal-content container">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span id="close" aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Phone Authentication</h4>
+      </div>
+      <div class="modal-body">
+	    <div class="row">
+		<div class="col-sm-6">
+        <input class="form-control" id="phoneNumber" type="text" placeholder="Enter Mobile Number"> <br>
+		<input class="form-control" id="verifyCode" type="text" placeholder="Enter Code"> 
+	    </div>
+		<div class="col-sm-6 wrap">
+		<button type="button" class="btn btn-primary btn-md" id="sign-in-button" style="width:200px">Send Verify Code</button><br> <br>
+	    <button type="button" class="btn btn-primary btn-md" id="verify-code"style="width:200px" onclick="onVerifyCodeSubmit()">Verify Code</button><br>
+		</div>
+      </div>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	 </div>
+  </form>
+  </center>
+</div>
+<div class="modal"  id="faceCapture"  tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg"  role="document">
+       <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span id="close_video" aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" style="background-color: #5cb85c">Face Capture</h4>
+      </div>
+      <div class="modal-body ">
+	    <div class="row">
+		<div class="col-xs-6">
+		<button type="button" class="btn btn-primary btn-md" id="startCam" style="width:200px" >Start WebCam</button><br> <br>
+        
+		
+        <video  width="320" height="240"  id="video"> 
+                   
+	    </div>
+		<div class="col-xs-6">
+		<button type="button" class="btn btn-primary btn-md" id="sign-in-button" onclick="captureShot()"style="width:200px">Capture Shot</button><br> <br>
+	    <canvas  id="newimage" name="image"></canvas>
+		</div>
+      </div>
+	  </div
+      <div class="modal-footer">
+        &nbsp;&nbsp;&nbsp;
+		<button type="button" class="btn btn-primary" data-dismiss="modal" id="close">Close</button> &nbsp;&nbsp;
+        <button type="button" class="btn btn-primary">Save Image</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+<script src="js/frontlogic.js"></script>
+<script>
+var email_ver=false;
+var phone_ver=false;
+function verifyPhone() { 
+console.log("Entered the phone auth");
+ phonemodal.style.display = "block";
+};
+
+function onStartCam() { 
+console.log("Entered face Capture");
+ faceCapture.style.display = "block";
+};
+
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+      'size': 'invisible',
+      'callback': function(response) {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        onSignInSubmit();
+      }
+    });
+    // [END appVerifier]
+    recaptchaVerifier.render().then(function(widgetId) {
+      window.recaptchaWidgetId = widgetId;
+      //updateSignInButtonUI();
+    });
+  
+ function onSignInSubmit() {
+    if (isPhoneNumberValid()) {
+      window.signingIn = true;
+      //updateSignInButtonUI();
+      var phoneNumber = getPhoneNumberFromUserInput();
+      var appVerifier = window.recaptchaVerifier;
+      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then(function (confirmationResult) {
+            // SMS sent. Prompt user to type the code from the message, then sign the
+            // user in with confirmationResult.confirm(code).
+            window.confirmationResult = confirmationResult;
+            window.signingIn = false;
+            console.log("SMS Sent");
+		
+			//updateSignInButtonUI();
+            //updateVerificationCodeFormUI();
+            //updateVerifyCodeButtonUI();
+            //updateSignInFormUI();
+          }).catch(function (error) {
+            // Error; SMS not sent
+            console.error('Error during signInWithPhoneNumber', error);
+            window.alert('Error during signInWithPhoneNumber:\n\n'
+                + error.code + '\n\n' + error.message);
+            window.signingIn = false;
+            //updateSignInFormUI();
+            //updateSignInButtonUI();
+          });
+    }
+  }
+  
+ function onVerifyCodeSubmit() {
+     console.log("Entered the phone auth");
+    if (!!getCodeFromUserInput()) {
+      window.verifyingCode = true;
+      //updateVerifyCodeButtonUI();
+      var code = getCodeFromUserInput();
+	  console.log("Entered the proc");
+      confirmationResult.confirm(code).then(function (result) {
+        // User signed in successfully.
+		console.log("Correct Code");
+		  document.getElementById("phone_correct").style.display="block";
+        var user = result.user;
+        window.verifyingCode = false;
+        window.confirmationResult = null;
+		console.log("Correct Code");
+		phone_ver=true;
+		console.log("Proc is success");
+		alert("Phone Authentication is Successful");
+        //updateVerificationCodeFormUI();
+      }).catch(function (error) {
+        // User couldn't sign in (bad verification code?)
+        console.error('Error while checking the verification code', error);
+        window.alert('Error while checking the verification code:\n\n'
+            + error.code + '\n\n' + error.message);
+        window.verifyingCode = false;
+		console.log("Proc failure");
+		document.getElementById("phone_fail").style.display="block";
+		alert("Verification code is incorrect");
+        //updateSignInButtonUI();
+        //updateVerifyCodeButtonUI();
+      });
+    }
+  } 
+  
+  
+    function isPhoneNumberValid() {
+    var pattern = /^\+[0-9\s\-\(\)]+$/;
+    var phoneNumber = getPhoneNumberFromUserInput();
+    return phoneNumber.search(pattern) !== -1;
+  }
+ function getPhoneNumberFromUserInput() {
+    return document.getElementById('phoneNumber').value;
+  }
+  function getCodeFromUserInput() {
+    return document.getElementById('verifyCode').value;
+  }
+ var close_btn = document.getElementById("close"); 
+ var startcam=document.getElementById("startCam"); 
+ var close_facecapturemodal= document.getElementById("close_video"); 
+
+ close_btn.onclick = function() {
+    phonemodal.style.display = "none";
+}
+
+
+ close_facecapturemodal.onclick = function() {
+    faceCapture.style.display = "none";
+}
+
+var video=document.getElementById('video');
+console.log(video);
+var canvas=document.getElementById('newimage');
+var context=canvas.getContext('2d');
+
+startcam.onclick=function (){
+        console.log("Started webcam");
+		var video=document.getElementById('video');
+		console.log(video);
+		var canvas=document.getElementById('newimage');
+	    console.log("reached canvas"); 
+	    navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.oGetUserMedia||navigator.msGetUserMedia;
+               if(navigator.getUserMedia)
+	           {
+			   navigator.getUserMedia({video:true},streamWebCam,throwError);
+	           }
+	          canvas.width=video.clientWidth;
+	          canvas.height=video.clientHeight;
+			 
+			  console.log("Canvas is drawn");
+	          context.drawImage(video,10,10,320,240); 
+	
+	}
+	
+	
+function  captureShot()
+{
+console.log("Canvas is drawn"); 
+context.drawImage(video,10,10,320,240); 
+
+}	
+	
+function streamWebCam(stream)
+{
+video.src=window.URL.createObjectURL(stream);
+video.play();	          
+}
+ function throwError(e)
+{alert(e.name);
+}		      
+function saveUpdate()
+{
+
+var newname= $("#UserName").val();
+		var phonenumber=$("#phoneNumber").val();
+		var phoneflag=phone_ver;
+		var newmailid=usr_email;
+		var canvas=document.getElementById("newimage");
+		var str = canvas.toDataURL();
+	    var pos =str.search("base64");
+        var newimage=str.slice(pos+7); 
+		alert(str);
+		alert(newimage);
+		 //var json_data ={new_name:newname,new_mobilenumber:newmobilenumber,new_mailid:newmailid,"_attachments":{"phot.png":{"content_type":"image\/png","data":newimage}}};
+		 var json_data ={name:newname,phonenumber:phonenumber,phoneflag:phoneflag,mailid:newmailid,mail_flag:email_ver,"image":newimage};
+		
+		
+	    alert("Inside Ajax");
+	
+			$.ajax({
+				url: "/add_details",
+				type: "post",
+				dataType: "json",
+				data: JSON.stringify(json_data),
+				contentType: "application/json",
+				cache: true,
+				timeout: 5000,
+				complete: function() {
+				  //called when complete
+				  console.log('process complete')}
+				});
+}
+		  
+		  
+		  
+</script>
+
+
+</html>
+
