@@ -1,5 +1,4 @@
-
-  // Initialize Firebase
+// Initialize Firebase
   var config = {
     apiKey: "AIzaSyBl4Svl9fi5idWOjLyvfk8MlW_PgmDq8DU",
     authDomain: "unochain-a62c5.firebaseapp.com",
@@ -12,6 +11,7 @@
  var provider = new firebase.auth.GoogleAuthProvider();
  var mail_auth_flag=false;
  var mobile_auth_flag=false;
+ var user;
  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('#recaptcha');
  var usr_email;
 function signIn()
@@ -20,24 +20,24 @@ function signIn()
   // This gives you a Google Access Token. You can use it to access the Google API.
   var token = result.credential.accessToken;
   // The signed-in user info.
-  var user = result.user;
+  usr_email = result.user.email;
   console.log(user);
   console.log("User done");
-  console.log(mail_auth_flag);
-  mail_auth_flag=true;
-  console.log(mail_auth_flag);
-  usr_email=user.email.
-  console.log("Done");
-  console.log(mail_auth_flag);
-  if(mail_auth_flag)
-  document.getElementById("gmail_correct").style.display="block";
+  //console.log(mail_auth_flag);
+  //mail_auth_flag=true;
+  //console.log(mail_auth_flag);
+  //usr_email=user.email.
+  //console.log("Done");
+  //console.log(mail_auth_flag);
+
+	  document.getElementById("gmail_correct").style.display="block";
   email_ver=true;
   console.log("Email ver");
   console.log(email_ver);
   // ...
 }).catch(function(error) {
   // Handle Errors here.
-  mail_auth_flag=false;
+ mail_auth_flag=false;
   console.log("failed");
   console.log(error);
   console.log(mail_auth_flag);
@@ -53,7 +53,7 @@ function signIn()
   // ...
   })};
  
- 
-
+ if(user!=null)
+ document.getElementById("gmail_correct").style.display="block";
 	  
   

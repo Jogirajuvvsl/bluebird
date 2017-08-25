@@ -1,25 +1,10 @@
-
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBl4Svl9fi5idWOjLyvfk8MlW_PgmDq8DU",
-    authDomain: "unochain-a62c5.firebaseapp.com",
-    databaseURL: "https://unochain-a62c5.firebaseio.com",
-    projectId: "unochain-a62c5",
-    storageBucket: "unochain-a62c5.appspot.com",
-    messagingSenderId: "142300613866"
-	}
-   firebase.initializeApp(config);
-   var provider = new firebase.auth.GoogleAuthProvider();
-   var mail_auth_flag=false;
-   var mobile_auth_flag=false;
-   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('#recaptcha');
 function signIn()
   {  
   firebase.auth().signInWithPopup(provider).then(function(result) {
   // This gives you a Google Access Token. You can use it to access the Google API.
   var token = result.credential.accessToken;
   // The signed-in user info.
-  var user = result.user;
+  var user = result.user.email;
   console.log(user);
   mail_auth_flag=true;
   console.log("Done");
@@ -39,6 +24,7 @@ function signIn()
   var credential = error.credential;
   // ...
 });
+};
   
  
 function verifyPhone() { 

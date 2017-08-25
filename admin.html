@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+</head>
+<body>
+
+<div class="jumbotron text-center" style="background-color: #5cb85c">
+  <h1>UnoChains</h1>
+  <p>Accurate Identity Through Blockchain Technology</p> 
+</div>
+  
+<div ng-app="myApp" ng-controller="details"> 
+
+<table class="table table-striped">
+ <thead>
+      <tr>
+        <th>Name</th>
+        <th>Mail Id</th>
+        <th>Mail Verification Status</th>
+		<th>Mobile Number</th>
+        <th>Mobile Number Verification Status</th>
+      
+      </tr>
+    </thead>
+ <tbody>	
+  <tr ng-repeat="x in data">
+    <td>{{ x.value[2] }}</td>
+    <td>{{ x.value[3] }}</td>
+	<td>{{ x.value[4] }}</td>
+	<td>{{ x.value[5] }}</td>
+	<td>{{ x.value[6] }}</td>
+	
+  </tr>
+  </tbody>
+</table>
+
+</div>
+</body>
+<script>
+var app = angular.module('myApp', []);
+app.controller('details', function($scope, $http) {
+    $http.get("/getAllDetails")
+    .then(function (response) {
+	console.log(response);
+	$scope.data = response.data;
+	console.log($scope.data);});
+console.log("Entered Angular code");});
+</script>
+</html>
+

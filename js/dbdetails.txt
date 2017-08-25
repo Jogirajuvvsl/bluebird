@@ -1,1 +1,5 @@
 doc.name,doc.mail_id,doc.mailfalg,doc.phonenumber,doc.phoneflag,doc.image
+
+
+
+doc._id, [doc._id,doc._rev,doc.name,doc.mail_id,doc.mailflag,doc.phonenumber,doc.phoneflag,doc.imageNam
